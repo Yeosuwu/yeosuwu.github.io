@@ -82,16 +82,15 @@
       padding: 2rem 1rem;
     }
 
-    .divider {
-      height: 1px;
-      background: #ddd;
-      margin: 3rem 0;
+    #rotating-word {
+      border-right: 2px solid white;
+      padding-right: 4px;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Hello, I'm Yeosuwu</h1>
+    <h1>Hello, I'm <span id="rotating-word">Yeosuwu</span></h1>
     <p>Student | Developer</p>
   </header>
   <main>
@@ -125,5 +124,36 @@
   <footer>
     &copy; 2025 Yeosuwu. All rights reserved.
   </footer>
+
+  <script>
+    const words = ["Yeosuwu", "Developer", "Student", "Engineer", "Problem Solver"];
+    const el = document.getElementById("rotating-word");
+    let i = 0;
+    let j = 0;
+    let currentWord = words[i];
+    let isDeleting = false;
+
+    function type() {
+      el.textContent = currentWord.substring(0, j) + (j < currentWord.length && !isDeleting ? "|" : "");
+
+      if (!isDeleting && j < currentWord.length) {
+        j++;
+      } else if (isDeleting && j > 0) {
+        j--;
+      } else if (!isDeleting && j === currentWord.length) {
+        isDeleting = true;
+        setTimeout(type, 1000);
+        return;
+      } else {
+        isDeleting = false;
+        i = (i + 1) % words.length;
+        currentWord = words[i];
+      }
+
+      setTimeout(type, isDeleting ? 50 : 120);
+    }
+
+    type();
+  </script>
 </body>
 </html>
