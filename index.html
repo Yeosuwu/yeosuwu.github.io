@@ -28,6 +28,7 @@
     header h1 {
       margin: 0;
       font-size: 2.5rem;
+      font-weight: 800;
     }
 
     header p {
@@ -82,33 +83,33 @@
       padding: 2rem 1rem;
     }
 
-  #rotating-word {
-  display: inline-block;
-}
+    #rotating-word {
+      display: inline-block;
+    }
 
-#cursor {
-  display: inline-block;
-  width: 1px;
-  height: 1.2em;
-  background-color: white;
-  margin-left: 4px;
-  animation: blink 1s step-end infinite;
-  vertical-align: middle;
-}
+    #cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background-color: white;
+      margin-left: 3px;
+      animation: blink 1s step-end infinite;
+      vertical-align: bottom;
+    }
 
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
-}
-
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Hello, I'm <span id="rotating-word">Yeosuwu</span><span id="cursor">|</span></h1>
+    <h1>Hello, I'm <span id="rotating-word">Yeosuwu</span><span id="cursor"></span></h1>
     <p>Student | Developer</p>
   </header>
+
   <main>
     <section>
       <h2>📍 About Me</h2>
@@ -123,7 +124,7 @@
       <h2>📈 Projects & Interests</h2>
       <ul>
         <li>Educational web tools & scripts</li>
-        <li>system hardening practices</li>
+        <li>System hardening practices</li>
         <li>Self-hosted privacy services</li>
         <li>GitHub, and decentralized tech</li>
       </ul>
@@ -137,6 +138,7 @@
       </div>
     </section>
   </main>
+
   <footer>
     &copy; 2025 Yeosuwu. All rights reserved.
   </footer>
