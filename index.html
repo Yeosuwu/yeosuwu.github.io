@@ -82,18 +82,31 @@
       padding: 2rem 1rem;
     }
 
-    #rotating-word {
-  border-right: 2px solid white;
-  padding-right: 4px;
+  #rotating-word {
   display: inline-block;
-  line-height: 1; 
-  vertical-align: middle; 
 }
+
+#cursor {
+  display: inline-block;
+  width: 1px;
+  height: 1.2em;
+  background-color: white;
+  margin-left: 4px;
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
   </style>
 </head>
 <body>
   <header>
-    <h1>Hello, I'm <span id="rotating-word">Yeosuwu</span></h1>
+    <h1>Hello, I'm <span id="rotating-word">Yeosuwu</span><span id="cursor">|</span></h1>
     <p>Student | Developer</p>
   </header>
   <main>
@@ -137,7 +150,7 @@
     let isDeleting = false;
 
     function type() {
-      el.textContent = currentWord.substring(0, j) + (j < currentWord.length && !isDeleting ? "|" : "");
+      el.textContent = currentWord.substring(0, j);
 
       if (!isDeleting && j < currentWord.length) {
         j++;
