@@ -1,1 +1,1 @@
-* yeosuwu.com
+[yeosuwu.com](https://yeosuwu.com)
