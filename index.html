@@ -133,7 +133,7 @@
     <section>
       <h2>📩 Contact</h2>
       <div class="contact-btns">
-        <a href="mailto:me@yeosuwu.com" class="btn">me@yeosuwu.com</a>
+        <a href="#" id="email-link" class="btn"></a>
         <a href="https://github.com/Yeosuwu" class="btn" target="_blank">GitHub Profile</a>
       </div>
     </section>
@@ -144,6 +144,11 @@
   </footer>
 
   <script>
+  const email = 'me' + '@' + 'yeosuwu.com';
+  const emailLink = document.getElementById('email-link');
+  emailLink.href = 'mailto:' + email;
+  emailLink.textContent = email;
+  
     const words = [
   "Yeosuwu",
   "Developer",
