@@ -141,7 +141,7 @@
   </header>
 
   <main>
-    <!-- Respect 메시지 박스가 여기 들어감 -->
+
 
     <section>
       <h2>📍 About Me</h2>
@@ -198,61 +198,27 @@
     emailLink.textContent = email;
 
     const words = [
-      "Yeosuwu",
-      "Developer",
-      "Student",
-      "Problem Solver",
-      "Privacy Advocate",
-      "Minimalist Coder",
-      "Open Source Contributor",
-      "JavaScript Tinkerer",
-      "Network Explorer",
-      "Web Artisan",
-      "CLI Lover",
-      "Dotfiles Tweaker",
-      "System Optimizer",
-      "Self-Hoster",
-      "Security Learner",
-      "Automation Nerd",
-      "Side Project Addict",
-      "Markdown Perfectionist",
-      "APIs Lover",
-      "Terminal Addict",
-      "Uptime Chaser",
-      "Clean Code Fanatic",
-      "Neovim Enjoyer",
-      "Digital Minimalist",
-      "Eternal Learner",
-      "Design-aware Coder",
-      "Free Software Believer",
+      "Yeosuwu", "Developer", "Student", "Problem Solver", "Privacy Advocate",
+      "Minimalist Coder", "Open Source Contributor", "JavaScript Tinkerer", "Network Explorer",
+      "Web Artisan", "CLI Lover", "Dotfiles Tweaker", "System Optimizer", "Self-Hoster",
+      "Security Learner", "Automation Nerd", "Side Project Addict", "Markdown Perfectionist",
+      "APIs Lover", "Terminal Addict", "Uptime Chaser", "Clean Code Fanatic", "Neovim Enjoyer",
+      "Digital Minimalist", "Eternal Learner", "Design-aware Coder", "Free Software Believer",
       "Yeosuwu again"
     ];
     const el = document.getElementById("rotating-word");
-    let i = 0;
-    let j = 0;
-    let currentWord = words[i];
-    let isDeleting = false;
+    let i = 0, j = 0, currentWord = words[i], isDeleting = false;
 
     function type() {
       el.textContent = currentWord.substring(0, j);
-
-      if (!isDeleting && j < currentWord.length) {
-        j++;
-      } else if (isDeleting && j > 0) {
-        j--;
-      } else if (!isDeleting && j === currentWord.length) {
-        isDeleting = true;
-        setTimeout(type, 1000);
-        return;
-      } else {
-        isDeleting = false;
-        i = (i + 1) % words.length;
-        currentWord = words[i];
+      if (!isDeleting && j < currentWord.length) j++;
+      else if (isDeleting && j > 0) j--;
+      else {
+        isDeleting = !isDeleting;
+        if (!isDeleting) currentWord = words[(++i) % words.length];
       }
-
       setTimeout(type, isDeleting ? 50 : 120);
     }
-
     type();
   </script>
 
@@ -260,18 +226,16 @@
     window.addEventListener('DOMContentLoaded', () => {
       const respectMessages = [];
 
-      // 1. Firefox
+
       if (navigator.userAgent.includes("Firefox")) {
         respectMessages.push("🦊 Respect for using Firefox.");
       }
 
-      // 2. Tor 추정
       const isTor = navigator.userAgent.includes("TorBrowser") || navigator.userAgent.includes("Windows NT 6.1");
       if (isTor) {
         respectMessages.push("🛡️ You're probably on Tor. Respect for maximizing anonymity.");
       }
 
-      // 3. DNT 감지
       const dntValues = [
         navigator.doNotTrack,
         window.doNotTrack,
@@ -282,7 +246,7 @@
         respectMessages.push("🚫 'Do Not Track' is enabled. You're sending a strong signal.");
       }
 
-      // 4. 쿠키 차단 감지
+
       try {
         document.cookie = "cookietest=1";
         const cookiesEnabled = document.cookie.indexOf("cookietest=") !== -1;
@@ -293,14 +257,10 @@
         respectMessages.push("🍪 Third-party cookies are likely blocked. Privacy game strong.");
       }
 
-      // 5. WebRTC 감지
       const detectWebRTCLeak = () => {
         return new Promise(resolve => {
           try {
-            if (typeof RTCPeerConnection === "undefined") {
-              return resolve(true); // 막혀 있음
-            }
-
+            if (typeof RTCPeerConnection === "undefined") return resolve(true);
             let leak = false;
             const pc = new RTCPeerConnection({ iceServers: [] });
             pc.createDataChannel("test");
@@ -325,6 +285,32 @@
           respectMessages.push("🔇 WebRTC appears to be limited or no IP leak was observed.");
         }
 
+        if (navigator.globalPrivacyControl === true) {
+          respectMessages.push("🌍 Global Privacy Control is enabled. Respect.");
+        }
+
+        try {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+          ctx.textBaseline = "top";
+          ctx.fillText("privacy", 2, 2);
+          const data = canvas.toDataURL();
+          if (!data || data.length < 100) {
+            respectMessages.push("🖼️ Canvas fingerprinting seems blocked or spoofed.");
+          }
+        } catch {
+          respectMessages.push("🖼️ Canvas fingerprinting is blocked.");
+        }
+
+        if (navigator.connection && navigator.connection.effectiveType) {
+          const type = navigator.connection.effectiveType;
+          if (type.includes("4g") || type.includes("5g")) {
+            respectMessages.push("📶 You're on mobile data. Lower traceability.");
+          } else if (type.includes("wifi")) {
+            respectMessages.push("🏠 On Wi-Fi. Consider VPN for privacy.");
+          }
+        }
+
         const main = document.querySelector("main");
         const box = document.createElement("div");
         box.className = "respect-box";
@@ -332,7 +318,7 @@
         if (respectMessages.length > 0) {
           box.innerHTML = `<strong>🙌 Privacy Signals Detected:</strong><ul>${respectMessages.map(msg => `<li>${msg}</li>`).join("")}</ul>`;
         } else {
-          box.innerHTML = `<strong>🧐 No privacy signals detected</strong><p>Consider enabling Do Not Track, blocking WebRTC leaks, using Firefox or Tor, or restricting cookies to enhance your privacy.</p>`;
+          box.innerHTML = `<strong>🧐 No privacy signals detected</strong><p>Consider enabling DNT, GPC, blocking WebRTC leaks, using Firefox or Tor, or disabling fingerprinting.</p>`;
         }
 
         main.insertBefore(box, main.firstChild);
