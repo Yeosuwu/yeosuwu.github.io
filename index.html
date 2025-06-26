@@ -14,6 +14,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+	  min-height: 100vh;
     }
 
     header {
@@ -39,6 +40,7 @@
     main {
       max-width: 680px;
       padding: 2rem 1.5rem;
+	  flex: 1;
     }
 
     section {
@@ -80,7 +82,8 @@
       text-align: center;
       font-size: 0.85rem;
       color: #777;
-      padding: 2rem 1rem;
+      padding: 1rem 1rem;
+	  margin-top: 0;
     }
 
     #rotating-word {
@@ -102,6 +105,33 @@
         opacity: 0;
       }
     }
+
+    /* 리스펙트 메시지 박스 스타일 */
+    .respect-box {
+      background-color: #eef0fc;
+      border-left: 4px solid #6366f1;
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      color: #333;
+      font-size: 0.95rem;
+    }
+
+    .respect-box strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #777;
+      padding: 1rem 1rem;
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
@@ -111,6 +141,7 @@
   </header>
 
   <main>
+    
     <section>
       <h2>📍 About Me</h2>
       <p>
@@ -145,83 +176,160 @@
 
   <script>
       const data = {
-    language: navigator.language,
-    platform: navigator.platform,
-    resolution: `${screen.width}x${screen.height}`,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-  };
+        language: navigator.language,
+        platform: navigator.platform,
+        resolution: `${screen.width}x${screen.height}`,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      };
 
-  fetch("https://information-grab.yeosuwu.workers.dev/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache"
-    },
-    body: JSON.stringify(data)
-  });
-    
-  const email = 'me' + '@' + 'yeosuwu.com';
-  const emailLink = document.getElementById('email-link');
-  emailLink.href = 'mailto:' + email;
-  emailLink.textContent = email;
-  
-    const words = [
-  "Yeosuwu",
-  "Developer",
-  "Student",
-  "Problem Solver",
-  "Privacy Advocate",
-  "Minimalist Coder",
-  "Open Source Contributor",
-  "JavaScript Tinkerer",
-  "Network Explorer",
-  "Web Artisan",
-  "CLI Lover",
-  "Dotfiles Tweaker",
-  "System Optimizer",
-  "Self-Hoster",
-  "Security Learner",
-  "Automation Nerd",
-  "Side Project Addict",
-  "Markdown Perfectionist",
-  "APIs Lover",
-  "Terminal Addict",
-  "Uptime Chaser",
-  "Clean Code Fanatic",
-  "Neovim Enjoyer",
-  "Digital Minimalist",
-  "Eternal Learner",
-  "Design-aware Coder",
-  "Free Software Believer",
-  "Yeosuwu again"
-];
-    const el = document.getElementById("rotating-word");
-    let i = 0;
-    let j = 0;
-    let currentWord = words[i];
-    let isDeleting = false;
+      fetch("https://information-grab.yeosuwu.workers.dev/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache"
+        },
+        body: JSON.stringify(data)
+      });
 
-    function type() {
-      el.textContent = currentWord.substring(0, j);
+      const email = 'me' + '@' + 'yeosuwu.com';
+      const emailLink = document.getElementById('email-link');
+      emailLink.href = 'mailto:' + email;
+      emailLink.textContent = email;
 
-      if (!isDeleting && j < currentWord.length) {
-        j++;
-      } else if (isDeleting && j > 0) {
-        j--;
-      } else if (!isDeleting && j === currentWord.length) {
-        isDeleting = true;
-        setTimeout(type, 1000);
-        return;
-      } else {
-        isDeleting = false;
-        i = (i + 1) % words.length;
-        currentWord = words[i];
+      const words = [
+        "Yeosuwu",
+        "Developer",
+        "Student",
+        "Problem Solver",
+        "Privacy Advocate",
+        "Minimalist Coder",
+        "Open Source Contributor",
+        "JavaScript Tinkerer",
+        "Network Explorer",
+        "Web Artisan",
+        "CLI Lover",
+        "Dotfiles Tweaker",
+        "System Optimizer",
+        "Self-Hoster",
+        "Security Learner",
+        "Automation Nerd",
+        "Side Project Addict",
+        "Markdown Perfectionist",
+        "APIs Lover",
+        "Terminal Addict",
+        "Uptime Chaser",
+        "Clean Code Fanatic",
+        "Neovim Enjoyer",
+        "Digital Minimalist",
+        "Eternal Learner",
+        "Design-aware Coder",
+        "Free Software Believer",
+        "Yeosuwu again"
+      ];
+      const el = document.getElementById("rotating-word");
+      let i = 0;
+      let j = 0;
+      let currentWord = words[i];
+      let isDeleting = false;
+
+      function type() {
+        el.textContent = currentWord.substring(0, j);
+
+        if (!isDeleting && j < currentWord.length) {
+          j++;
+        } else if (isDeleting && j > 0) {
+          j--;
+        } else if (!isDeleting && j === currentWord.length) {
+          isDeleting = true;
+          setTimeout(type, 1000);
+          return;
+        } else {
+          isDeleting = false;
+          i = (i + 1) % words.length;
+          currentWord = words[i];
+        }
+
+        setTimeout(type, isDeleting ? 50 : 120);
       }
 
-      setTimeout(type, isDeleting ? 50 : 120);
+      type();
+  </script>
+
+
+  <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const respectMessages = [];
+
+
+    if (navigator.userAgent.includes("Firefox")) {
+      respectMessages.push("🦊 Respect for using Firefox.");
     }
 
-    type();
+
+    const isTor = navigator.userAgent.includes("TorBrowser") || navigator.userAgent.includes("Windows NT 6.1");
+    if (isTor) {
+      respectMessages.push("🛡️ You're probably on Tor. Respect for maximizing anonymity.");
+    }
+
+
+    const dntValues = [
+      navigator.doNotTrack,
+      window.doNotTrack,
+      navigator.msDoNotTrack
+    ];
+    const dntIsOn = dntValues.some(v => v === "1" || v === 1 || v === "yes");
+    if (dntIsOn) {
+      respectMessages.push("🚫 'Do Not Track' is enabled. You're sending a strong signal.");
+    }
+
+
+    try {
+      document.cookie = "cookietest=1";
+      const cookiesEnabled = document.cookie.indexOf("cookietest=") !== -1;
+      if (!cookiesEnabled) {
+        respectMessages.push("🍪 Third-party cookies might be blocked. Respect for privacy hardening.");
+      }
+    } catch {
+      respectMessages.push("🍪 Third-party cookies are likely blocked. Privacy game strong.");
+    }
+
+ 
+    const detectWebRTCLeak = () => {
+      return new Promise(resolve => {
+        let leak = false;
+        const pc = new RTCPeerConnection({ iceServers: [] });
+        pc.createDataChannel("test");
+        pc.createOffer().then(offer => pc.setLocalDescription(offer));
+        pc.onicecandidate = (event) => {
+          if (event && event.candidate) {
+            const cand = event.candidate.candidate;
+            if (cand.includes("srflx") || cand.includes("relay")) leak = true;
+          } else {
+            resolve(!leak);
+          }
+        };
+        setTimeout(() => resolve(!leak), 1500);
+      });
+    };
+
+    detectWebRTCLeak().then(noLeak => {
+      if (noLeak) {
+        respectMessages.push("🔇 WebRTC is blocked or IP leak is prevented. Great job.");
+      }
+
+      const main = document.querySelector("main");
+      const box = document.createElement("div");
+      box.className = "respect-box";
+
+      if (respectMessages.length > 0) {
+        box.innerHTML = `<strong>🙌 Privacy Signals Detected:</strong><ul>${respectMessages.map(msg => `<li>${msg}</li>`).join("")}</ul>`;
+      } else {
+        box.innerHTML = `<strong>🧐 No privacy signals detected</strong><p>Consider enabling Do Not Track, blocking WebRTC leaks, using Firefox or Tor, or restricting cookies to enhance your privacy.</p>`;
+      }
+
+      main.insertBefore(box, main.firstChild);
+    });
+  });
   </script>
 </body>
 </html>
