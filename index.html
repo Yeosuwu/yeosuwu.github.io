@@ -322,7 +322,7 @@
 
       detectWebRTCLeak().then(noLeak => {
         if (noLeak) {
-          respectMessages.push("🔇 WebRTC is blocked or IP leak is prevented. Great job.");
+          respectMessages.push("🔇 WebRTC appears to be limited or no IP leak was observed.");
         }
 
         const main = document.querySelector("main");
