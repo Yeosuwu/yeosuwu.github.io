@@ -216,6 +216,7 @@
       else {
         isDeleting = !isDeleting;
         if (!isDeleting) currentWord = words[(++i) % words.length];
+            setTimeout(type, 1000);
       }
       setTimeout(type, isDeleting ? 50 : 120);
     }
