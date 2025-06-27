@@ -197,30 +197,45 @@
     emailLink.href = 'mailto:' + email;
     emailLink.textContent = email;
 
-    const words = [
-      "Yeosuwu", "Developer", "Student", "Problem Solver", "Privacy Advocate",
-      "Minimalist Coder", "Open Source Contributor", "JavaScript Tinkerer", "Network Explorer",
-      "Web Artisan", "CLI Lover", "Dotfiles Tweaker", "System Optimizer", "Self-Hoster",
-      "Security Learner", "Automation Nerd", "Side Project Addict", "Markdown Perfectionist",
-      "APIs Lover", "Terminal Addict", "Uptime Chaser", "Clean Code Fanatic", "Neovim Enjoyer",
-      "Digital Minimalist", "Eternal Learner", "Design-aware Coder", "Free Software Believer",
-      "Yeosuwu again"
-    ];
-    const el = document.getElementById("rotating-word");
-    let i = 0, j = 0, currentWord = words[i], isDeleting = false;
+   const words = [
+  "Yeosuwu", "Developer", "Student", "Problem Solver", "Privacy Advocate",
+  "Minimalist Coder", "Open Source Contributor", "JavaScript Tinkerer", "Network Explorer",
+  "Web Artisan", "CLI Lover", "Dotfiles Tweaker", "System Optimizer", "Self-Hoster",
+  "Security Learner", "Automation Nerd", "Side Project Addict", "Markdown Perfectionist",
+  "APIs Lover", "Terminal Addict", "Uptime Chaser", "Clean Code Fanatic", "Neovim Enjoyer",
+  "Digital Minimalist", "Eternal Learner", "Design-aware Coder", "Free Software Believer",
+  "Yeosuwu again"
+];
 
-    function type() {
-      el.textContent = currentWord.substring(0, j);
-      if (!isDeleting && j < currentWord.length) j++;
-      else if (isDeleting && j > 0) j--;
-      else {
-        isDeleting = !isDeleting;
-        if (!isDeleting) currentWord = words[(++i) % words.length];
-            setTimeout(type, 1000);
-      }
-      setTimeout(type, isDeleting ? 50 : 120);
-    }
-    type();
+const el = document.getElementById("rotating-word");
+let i = 0;
+let j = 0;
+let currentWord = words[i];
+let isDeleting = false;
+let delay = 120;  
+
+function type() {
+  el.textContent = currentWord.substring(0, j);
+
+  if (!isDeleting && j < currentWord.length) {
+    j++;
+  } else if (isDeleting && j > 0) {
+    j--;
+  } else if (!isDeleting && j === currentWord.length) {
+    isDeleting = true;
+    setTimeout(type, 1000);
+    return;
+  } else if (isDeleting && j === 0) {
+    isDeleting = false;
+    i = (i + 1) % words.length;
+    currentWord = words[i];
+  }
+
+  delay = isDeleting ? 50 : 120;
+  setTimeout(type, delay);
+}
+
+type();
   </script>
 
   <script>
